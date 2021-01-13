@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, com.koreait.board.model.*" %>    
+<%
+	List<BoardEntity> list = (List)request.getAttribute("list");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,15 +19,19 @@
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
+				<th>등록일시</th>
 			</tr>
+			<% for(BoardEntity vo : list) { %>
 			<tr>
-				<th>1</th>
-				<th><a href="/detail?i_board=1">첫번째 글</a></th>
+				<td><%=vo.getI_board()%></td>
+				<td>
+					<a href="/detail?i_board=<%=vo.getI_board()%>">
+						<%=vo.getTitle()%>
+					</a>
+				</td>
+				<td><%=vo.getR_dt()%></td>
 			</tr>
-			<tr>
-				<th>2</th>
-				<th><a href="/detail?i_board=2">두번째 글</a></th>
-			</tr>
+			<% } %>
 		</table>
 	</div>
 </body>
