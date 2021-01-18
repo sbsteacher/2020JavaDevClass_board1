@@ -30,7 +30,7 @@ public class BoardDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT i_board, title, r_dt FROM t_board";		
+		String sql = "SELECT i_board, title, r_dt FROM t_board ORDER BY i_board DESC";		
 		try {
 			con = DbUtils.getCon();
 			ps = con.prepareStatement(sql);
@@ -50,6 +50,73 @@ public class BoardDAO {
 			DbUtils.close(con, ps, rs);
 		}		
 		return null;
+	}
+	
+	public static BoardEntity selBoard(BoardEntity param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT title, ctnt, r_dt FROM t_board WHERE i_board = ?";
+		
+		try {
+			con = DbUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {				
+				String title = rs.getString("title");
+				String ctnt = rs.getString("ctnt");
+				String r_dt = rs.getString("r_dt");
+				
+				BoardEntity vo = new BoardEntity();
+				vo.setTitle(title);
+				vo.setCtnt(ctnt);
+				vo.setR_dt(r_dt);
+				vo.setI_board(param.getI_board());
+				return vo;
+			}
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally {
+			DbUtils.close(con, ps, rs);
+		}	
+		return null;
+	}
+	
+	public static void updBoard(BoardEntity param) {
+		Connection con = null;
+		PreparedStatement ps = null;		
+		String sql = "UPDATE t_board SET title = ?, ctnt = ? WHERE i_board = ?";		
+		try {
+			con = DbUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, param.getTitle());
+			ps.setString(2, param.getCtnt());
+			ps.setInt(3, param.getI_board());			
+			ps.executeUpdate();
+		} catch (Exception e) {		
+			e.printStackTrace();
+		} finally {
+			DbUtils.close(con, ps);
+		}
+	}
+	
+	public static void delBoard(BoardEntity param) {
+		Connection con = null;
+		PreparedStatement ps = null;		
+		String sql = "DELETE FROM t_board WHERE i_board = ?";		
+		try {
+			con = DbUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());			
+			ps.executeUpdate();
+		} catch (Exception e) {		
+			e.printStackTrace();
+		} finally {
+			DbUtils.close(con, ps);
+		}
 	}
 }
 

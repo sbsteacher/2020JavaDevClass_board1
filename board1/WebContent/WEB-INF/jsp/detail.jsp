@@ -9,13 +9,28 @@
 <body>
 	<div>
 		<a href="/list">리스트로 돌아가기</a>
-		<a href="/del?i_board=1"><button>삭제</button></a>
-		<a href=""><button>수정</button></a>
+		<a href="/del?i_board=${param.i_board}"><button>삭제</button></a>
+		<a href="/update?i_board=${param.i_board}"><button>수정</button></a>
 	</div>
 	<div>
-		디테일 내용이 출력될 부분!!!
-		/detail?i_board=1
-		BoardDetailServlet
+		<div>번호 : ${data.i_board} or ${param.i_board}</div>
+		<div>타이틀 : ${data.title}</div>
+		<div>작성일시 : ${data.r_dt}</div>
+		<hr>
+		<div>${data.ctnt}</div>		
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
