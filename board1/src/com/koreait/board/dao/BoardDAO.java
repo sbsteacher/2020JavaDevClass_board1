@@ -26,14 +26,18 @@ public class BoardDAO {
 		}
 	}
 	
-	public static List<BoardEntity> selBoardList() {
+	public static List<BoardEntity> selBoardList(BoardDTO param) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT i_board, title, r_dt FROM t_board ORDER BY i_board DESC";		
+		String sql = " SELECT i_board, title, r_dt FROM t_board "
+				+ " ORDER BY i_board DESC "
+				+ " LIMIT ?, ? ";		
 		try {
 			con = DbUtils.getCon();
 			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getStartIdx());
+			ps.setInt(2, param.getRowCountPerPage());
 			rs = ps.executeQuery();
 			List<BoardEntity> list = new ArrayList<>();
 			while(rs.next()) {
@@ -83,6 +87,30 @@ public class BoardDAO {
 			DbUtils.close(con, ps, rs);
 		}	
 		return null;
+	}
+	
+	public static int selPageLength(BoardDTO param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT CEIL(COUNT(i_board) / ?) FROM t_board";
+		
+		try {
+			con = DbUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getRowCountPerPage());
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1); 
+			}
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally {
+			DbUtils.close(con, ps, rs);
+		}
+		return 0;
 	}
 	
 	public static void updBoard(BoardEntity param) {
