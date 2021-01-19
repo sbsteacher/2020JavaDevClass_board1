@@ -32,7 +32,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		String sql = " SELECT i_board, title, r_dt FROM t_board "
 				+ " ORDER BY i_board DESC "
-				+ " LIMIT ?, ? ";		
+				+ " LIMIT ?, ? ";
 		try {
 			con = DbUtils.getCon();
 			ps = con.prepareStatement(sql);

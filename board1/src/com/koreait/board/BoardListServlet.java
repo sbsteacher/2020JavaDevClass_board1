@@ -17,9 +17,9 @@ public class BoardListServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String strPage = request.getParameter("page");
-		int page = strPage == null ? 1 : Integer.parseInt(strPage);
+		int page = (strPage == null ? 1 : Integer.parseInt(strPage));
 		
-		int rowCnt = 5;
+		int rowCnt = 3; //한 화면에 나타날 레코드 수 (글 수)
 		BoardDTO param = new BoardDTO();
 		param.setRowCountPerPage(rowCnt);
 		param.setStartIdx(rowCnt * (page - 1));

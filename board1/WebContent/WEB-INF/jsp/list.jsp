@@ -4,17 +4,19 @@
 <%
 	List<BoardEntity> list = (List)request.getAttribute("list");
 	int pageLength = (int)request.getAttribute("pageLength");
+	
+	String strPage = request.getParameter("page");
+	if(strPage == null) {
+		strPage = "1";
+	}
+	int p = Integer.parseInt(strPage);
 %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>리스트</title>
-<style>
-	.pagingContainer {
-		text-align: center;
-	}
-</style>
+<link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
 	<div>
@@ -41,7 +43,7 @@
 		</table>
 		<div class="pagingContainer">
 			<% for(int i=1; i<=pageLength; i++) { %>
-				<span class="page">
+				<span class="page <%=p == i ? "selectedPage" : ""%>">
 					<a href="/list?page=<%=i%>"><%=i%></a>
 				</span>
 			<% } %>
