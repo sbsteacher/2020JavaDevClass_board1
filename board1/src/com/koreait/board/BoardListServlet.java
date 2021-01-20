@@ -16,8 +16,7 @@ public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String strPage = request.getParameter("page");
-		int page = (strPage == null ? 1 : Integer.parseInt(strPage));
+		int page = Utils.getParameterInt(request, "page", 1);
 		
 		int rowCnt = 3; //한 화면에 나타날 레코드 수 (글 수)
 		BoardDTO param = new BoardDTO();

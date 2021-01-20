@@ -33,7 +33,7 @@
 			<tr>
 				<td><%=vo.getI_board()%></td>
 				<td>
-					<a href="/detail?i_board=<%=vo.getI_board()%>">
+					<a href="/detail?i_board=<%=vo.getI_board()%>&page=${param.page}">
 						<%=vo.getTitle()%>
 					</a>
 				</td>
